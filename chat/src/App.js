@@ -18,6 +18,15 @@ function reducer(state, action) {
     return {
       messages: state.messages.concat(action.message),
     };
+  } else if (action.type === 'DELETE_MESSAGE') {
+    return {
+      messages: [
+        ...state.messages.slice(0, action.index),
+        ...state.messages.slice(
+          action.index + 1, state.messages.length
+        ),
+      ],
+    };
   } else {
     return state;
   }
@@ -47,6 +56,17 @@ console.log('State v1:');
 console.log(stateV1);
 console.log('State v2:');
 console.log(stateV2);
+
+const deleteMessageAction = {
+  type: 'DELETE_MESSAGE',
+  index: 0,
+};
+
+store.dispatch(deleteMessageAction);
+const stateV3 = store.getState();
+
+console.log('State v3:');
+console.log(stateV3);
 
 const App = { createStore, reducer, initialState }; // for tests
 export default App;
