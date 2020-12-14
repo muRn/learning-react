@@ -1,4 +1,4 @@
-### Running the examples
+### Running the app
 
 1. Ensure you have `npm` installed.
 
@@ -10,8 +10,10 @@ Follow the instructions for your platform [here](https://github.com/npm/npm).
 npm install
 ````
 
-3. We execute the files in the terminal using `babel-node` which comes with `babel-cli`:
+3. Boot the HTTP server
 
 ````
-./node_modules/.bin/babel-node app.js
+npm run server
 ````
+
+The server is now running at [localhost:3000](localhost:3000)
