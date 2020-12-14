@@ -9,8 +9,24 @@ function reducer(state, action) {
       timestamp: Date.now(),
       id: uuid.v4(),
     };
+    const threadIndex = state.threads.findIndex(
+      (t) => t.id === action.threadId
+    );
+    const oldThread = state.threads[threadIndex];
+    const newThread = {
+      ...oldThread,
+      messages: oldThread.messages.concat(newMessage),
+    };
+
     return {
-      messages: state.messages.concat(newMessage),
+      ...state,
+      threads:[
+        ...state.threads.slice(0, threadIndex), // up to the thread
+        newThread, // insert the new thread object
+        ...state.threads.slice(
+          threadIndex + 1, state.threads.length // after the thread
+        ),
+      ],
     };
   } else if (action.type === 'DELETE_MESSAGE') {
     return {
@@ -106,6 +122,7 @@ class MessageInput extends React.Component {
     store.dispatch({
       type: 'ADD_MESSAGE',
       text: this.state.value,
+      threadId: this.props.threadId,
     });
     this.setState({
       value: '',
@@ -158,7 +175,7 @@ class Thread extends React.Component {
         <div className='ui comments'>
           {messages}
         </div>
-        <MessageInput />
+        <MessageInput threadId={this.props.thread.id}/>
       </div>
     );
   }
