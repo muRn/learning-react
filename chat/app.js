@@ -8,17 +8,37 @@ function reducer(state, action) {
   }
 }
 
+function createStore(reducer) {
+  let state = 0;
+
+  const getState = () => (state);
+
+  const dispatch = (action) => {
+    state = reducer(state, action);
+  };
+
+  return {
+    getState,
+    dispatch,
+  };
+}
+
+const store = createStore(reducer);
+
 const incrementAction = {
   type: 'INCREMENT',
-  amount: 5,
+  amount: 3,
 };
 
-console.log(reducer(0, incrementAction)); // -> 5
-console.log(reducer(1, incrementAction)); // -> 6
+store.dispatch(incrementAction);
+console.log(store.getState()); // -> 3
+store.dispatch(incrementAction);
+console.log(store.getState()); // -> 6
 
 const decrementAction = {
   type: 'DECREMENT',
-  amount: 11,
+  amount: 4,
 };
 
-console.log(reducer(100, decrementAction)); // -> 89
+store.dispatch(decrementAction);
+console.log(store.getState()); // -> 2
