@@ -122,8 +122,10 @@ class MessageView extends React.Component {
       </div>
     ));
     return (
-      <div className='ui comments'>
-        {messages}
+      <div className='ui center aligned basic segment'>
+        <div className='ui comments'>
+          {messages}
+        </div>
       </div>
     );
   }
